@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lohi's Cute ICSE Exam</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#fff3f8,#f3efff,#eef9ff);color:#333}
+.wrap{max-width:900px;margin:auto;padding:16px}.card{background:#ffffffee;border-radius:22px;padding:20px;margin:14px 0;box-shadow:0 7px 25px #80608022;border:1px solid #eaddec}
+h1{text-align:center;color:#79569b}h2{color:#79569b;border-bottom:2px dashed #dfcfe7;padding-bottom:7px}
+.center{text-align:center}.badge{display:inline-block;background:#f7e6f4;padding:7px 11px;border-radius:20px;margin:4px;font-size:13px}
+.q{background:#fffafd;border:1px solid #eadfeb;border-radius:14px;padding:13px;margin:10px 0}
+label{display:block;padding:5px}.ans{width:100%;box-sizing:border-box;padding:10px;border:1px solid #cfc2d8;border-radius:10px;font-size:15px}textarea{min-height:65px}
+button{border:0;border-radius:22px;padding:12px 20px;background:#79569b;color:#fff;font-weight:bold;font-size:16px;cursor:pointer;margin:5px}.secondary{background:#eadff0;color:#624878}
+.hidden{display:none}.score{font-size:38px;font-weight:bold;color:#79569b}.correct{background:#ebfaee;border-left:6px solid #63ad70}.wrong{background:#fff0f3;border-left:6px solid #d46c82}
+.review{padding:11px;margin:8px 0;border-radius:12px}.key{color:#6d4b91}.chat{height:180px;overflow:auto;background:#faf7ff;border-radius:14px;padding:10px}.msg{padding:8px;margin:6px;border-radius:12px}.me{background:#e7f4ff;text-align:right}.bot{background:#f5e9fb}
+small{color:#666}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card">
+<h1>🌷♡ Lohi's Class 8 ICSE Exam ♡🌷</h1>
+<p class="center">History & Civics • <b>80 Marks</b> • Offline Practice</p>
+<div class="center"><span class="badge">🌸 40 Objective</span><span class="badge">📚 40 Keywords</span><span class="badge">✨ Instant Correction</span></div>
+<p class="center"><small>History Ch. 2–5 • Civics Ch. 16–18</small></p>
+</div>
+
+<form id="exam">
+<div class="card">
+<h2>🌼 SECTION A — OBJECTIVE (40 MARKS)</h2>
+<h3>Q1. Choose the correct answer — 10 × 1</h3><div id="mcq"></div>
+<h3>Q2. Fill in the blanks — 10 × 1</h3><div id="fill"></div>
+<h3>Q3. True or False — 10 × 1</h3><div id="tf"></div>
+<h3>Q4. Match the following — 10 × 1</h3><div id="match"></div>
+</div>
+
+<div class="card">
+<h2>🦋 SECTION B — KEYWORD / SHORT ANSWER (40 MARKS)</h2>
+<p><small>Keep answers short. Important keywords are enough.</small></p>
+<h3>Q5. One word / phrase — 5 × 2</h3><div id="q5"></div>
+<h3>Q6. Give TWO keywords / points — 5 × 2</h3><div id="q6"></div>
+<h3>Q7. Identify the term — 5 × 2</h3><div id="q7"></div>
+<h3>Q8. Brief keyword answers — 5 × 2</h3><div id="q8"></div>
+</div>
+
+<div class="card center">
+<button type="button" onclick="submitExam()">🌸 SUBMIT EXAM & SEE RESULTS 🌸</button>
+</div>
+</form>
+
+<div id="results" class="card hidden">
+<h2>🎀 Your Result</h2>
+<div id="score" class="score center"></div>
+<div id="summary"></div>
+<h2>📖 Complete Correction & Answer Key</h2>
+<div id="correction"></div>
+<div class="center"><button class="secondary" onclick="location.reload()">🔄 Try Again</button></div>
+</div>
+
+<div class="card">
+<h2>💬 Talk to Lohi</h2>
+<div id="chat" class="chat"><div class="msg bot">Hii! 🌷 Ask me about any of the seven chapters. I can explain key ideas or give you a hint.</div></div>
+<input id="chatInput" class="ans" placeholder="Ask something about the syllabus…">
+<button onclick="talk()">💗 Send</button>
+<p><small>🔒 Offline mode: this helper is built into this file. Your answers stay in the page and are not uploaded anywhere.</small></p>
+</div>
+</div>
+
+<script>
+const mcq=[
+["The Renaissance began in:",["England","Italy","France","Spain"],1,"Italy"],
+["The invention of the printing press is associated with:",["James Watt","Johannes Gutenberg","Abraham Lincoln","Napoleon"],1,"Johannes Gutenberg"],
+["The Industrial Revolution first began in:",["Britain","France","India","Russia"],0,"Britain"],
+["The Industrial Revolution was closely associated with the development of:",["Handicrafts","Factories","Feudalism","Nomadic life"],1,"Factories"],
+["The French Revolution began in:",["1776","1789","1815","1857"],1,"1789"],
+["The American Civil War was fought mainly between the:",["East and West","North and South","British and French","Spanish and Portuguese"],1,"North and South"],
+["The Parliament of India consists of:",["Lok Sabha and Rajya Sabha only","President, Lok Sabha and Rajya Sabha","President and Lok Sabha only","Prime Minister and Lok Sabha"],1,"President, Lok Sabha and Rajya Sabha"],
+["The Upper House of Parliament is the:",["Lok Sabha","Rajya Sabha","Legislative Assembly","Vidhan Sabha"],1,"Rajya Sabha"],
+["The real executive authority at the Union level is exercised by the:",["President alone","Prime Minister and Council of Ministers","Chief Justice","Speaker"],1,"Prime Minister and Council of Ministers"],
+["The highest court in India is the:",["High Court","District Court","Supreme Court","Sessions Court"],2,"Supreme Court"]
+];
+
+const fills=[
+["The Renaissance means __________.",["rebirth"],"Rebirth"],
+["Johannes Gutenberg invented the __________.",["printing press"],"Printing press"],
+["The Industrial Revolution began in __________.",["britain","great britain"],"Britain"],
+["The development of the __________ engine greatly helped the Industrial Revolution.",["steam"],"Steam"],
+["The French Revolution began in the year __________.",["1789"],"1789"],
+["The American Civil War was fought between the __________ and the __________.",["north","south"],"North and South"],
+["The lower House of Parliament is called the __________.",["lok sabha"],"Lok Sabha"],
+["The upper House of Parliament is called the __________.",["rajya sabha"],"Rajya Sabha"],
+["The Union Council of Ministers is headed by the __________.",["prime minister"],"Prime Minister"],
+["The Supreme Court is headed by the __________.",["chief justice"],"Chief Justice of India"]
+];
+
+const tfs=[
+["The Renaissance encouraged new ideas and learning.",true,"True"],
+["The printing press helped in the spread of knowledge.",true,"True"],
+["The Industrial Revolution began first in India.",false,"False"],
+["Factories became important during the Industrial Revolution.",true,"True"],
+["The French Revolution began in 1789.",true,"True"],
+["The American Civil War was connected with the issue of slavery.",true,"True"],
+["The Lok Sabha is the Upper House of Parliament.",false,"False"],
+["The Rajya Sabha represents the states and Union Territories.",true,"True"],
+["The President is the constitutional head of the Union.",true,"True"],
+["The Supreme Court is the highest court in India.",true,"True"]
+];
+
+const ma=["Renaissance","Johannes Gutenberg","James Watt","French Revolution","Abraham Lincoln","Lok Sabha","Rajya Sabha","Prime Minister","Supreme Court","President"];
+const mb=["Upper House","American Civil War","Rebirth","Printing Press","Steam Engine","1789","Lower House","Head of Council of Ministers","Highest Court","Constitutional Head"];
+const mAns=[2,3,4,5,1,6,0,7,8,9];
+
+const sections={
+q5:[
+["What was the cultural movement that revived interest in classical learning?",["renaissance"],"Renaissance"],
+["Who invented the printing press?",["johannes gutenberg","gutenberg"],"Johannes Gutenberg"],
+["Name the revolution that began in France in 1789.",["french revolution"],"French Revolution"],
+["Who was the U.S. President during the American Civil War?",["abraham lincoln","lincoln"],"Abraham Lincoln"],
+["Name the highest court of India.",["supreme court"],"Supreme Court"]
+],
+q6:[
+["Mention TWO features of the Renaissance.",["humanism","classical learning","art","science","individualism"],"Any two: Humanism, classical learning, art, science, individualism"],
+["Give TWO causes of the Industrial Revolution.",["coal","iron","steam","capital","raw materials","labour","markets","inventions"],"Any two: coal, iron, steam, capital, raw materials, labour, markets, inventions"],
+["Mention TWO causes of the French Revolution.",["tax","inequality","estates","financial crisis","absolute monarchy","bread","privileges"],"Any two: inequality, tax burden, financial crisis, privileges, absolute monarchy"],
+["State TWO causes of the American Civil War.",["slavery","states rights","economic","abolition","north","south"],"Any two: slavery, states' rights, economic differences, abolition"],
+["Mention the TWO Houses of Parliament.",["lok sabha","rajya sabha"],"Lok Sabha and Rajya Sabha"]
+],
+q7:[
+["Name the system in which goods are produced on a large scale in factories.",["factory system"],"Factory system"],
+["Name the policy of establishing control over other countries and territories.",["imperialism"],"Imperialism"],
+["Name the document declaring the American colonies' independence from Britain.",["declaration of independence"],"Declaration of Independence"],
+["Name the presiding officer of the Lok Sabha.",["speaker"],"Speaker"],
+["Name the head of the Union Council of Ministers.",["prime minister"],"Prime Minister"]
+],
+q8:[
+["What were the main ideas of the Renaissance?",["humanism","reason","individualism","classical learning","scientific enquiry","art"],"Keywords: humanism, reason, individualism, classical learning, scientific enquiry, art"],
+["Mention TWO effects of the Industrial Revolution.",["urbanisation","factories","mass production","transport","working class","pollution","imperialism"],"Any two: urbanisation, factories, mass production, transport, working class, pollution"],
+["What was the importance of the French Revolution?",["liberty","equality","fraternity","rights","democracy","feudalism"],"Keywords: liberty, equality, fraternity, rights, democracy; challenged feudalism"],
+["What was the main issue of slavery in the American Civil War?",["slavery","abolition","emancipation","north","south"],"Keywords: slavery, abolition, emancipation, North and South"],
+["State TWO functions of the Supreme Court.",["judicial review","interpretation","constitution","appeal","fundamental rights","disputes"],"Any two: judicial review, constitutional interpretation, appeals, fundamental rights, disputes"]
+]};
+
+function norm(s){return (s||"").toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
+function hit(s,keys){let x=norm(s);return keys.some(k=>x.includes(norm(k)))}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+function render(){
+mcq.forEach((q,i)=>mcqEl.innerHTML+=`<div class=q><b>${i+1}. ${q[0]}</b>${q[1].map((x,j)=>`<label><input type=radio name=m${i} value=${j}> ${String.fromCharCode(65+j)}) ${x}</label>`).join("")}</div>`);
+fills.forEach((q,i)=>fillEl.innerHTML+=`<div class=q><b>${i+1}. ${q[0]}</b><input id=f${i} class=ans></div>`);
+tfs.forEach((q,i)=>tfEl.innerHTML+=`<div class=q><b>${i+1}. ${q[0]}</b><label><input type=radio name=t${i} value=true> True</label><label><input type=radio name=t${i} value=false> False</label></div>`);
+ma.forEach((q,i)=>matchEl.innerHTML+=`<div class=q><b>${i+1}. ${q}</b><select id=a${i} class=ans><option value="">Choose…</option>${mb.map((x,j)=>`<option value=${j}>${String.fromCharCode(97+j)}) ${x}</option>`).join("")}</select></div>`);
+Object.entries(sections).forEach(([id,arr])=>arr.forEach((q,i)=>document.getElementById(id).innerHTML+=`<div class=q><b>${i+1}. ${q[0]}</b><textarea id=${id}${i} class=ans placeholder="Write your answer…"></textarea></div>`));
+}
+const mcqEl=document.getElementById("mcq"),fillEl=document.getElementById("fill"),tfEl=document.getElementById("tf"),matchEl=document.getElementById("match");
+
+function review(title,ok,your,correct,marks){
+return `<div class="review ${ok?"correct":"wrong"}"><b>${ok?"✅":"❌"} ${title}</b> — ${marks===undefined?(ok?"1/1":"0/1"):marks+"/2"}<br><b>Your answer:</b> ${esc(your||"No answer")}<br><span class=key><b>Correct answer / keywords:</b> ${esc(correct)}</span></div>`;
+}
+function submitExam(){
+let score=0,out="";
+mcq.forEach((q,i)=>{let x=document.querySelector(`input[name=m${i}]:checked`),ok=x&&+x.value===q[2];if(ok)score++;out+=review("Q1."+ (i+1),ok,x?q[1][+x.value]:"No answer",q[3]);});
+fills.forEach((q,i)=>{let x=document.getElementById("f"+i).value,ok=hit(x,q[1]);if(ok)score++;out+=review("Q2."+ (i+1),ok,x,q[2]);});
+tfs.forEach((q,i)=>{let x=document.querySelector(`input[name=t${i}]:checked`),ok=x&&((x.value==="true")===q[1]);if(ok)score++;out+=review("Q3."+ (i+1),ok,x?(x.value==="true"?"True":"False"):"No answer",q[2]);});
+ma.forEach((q,i)=>{let x=document.getElementById("a"+i).value,ok=x!==""&&+x===mAns[i];if(ok)score++;out+=review("Q4."+ (i+1),ok,x===""?"No answer":mb[+x],mb[mAns[i]]);});
+Object.entries(sections).forEach(([id,arr])=>arr.forEach((q,i)=>{
+let x=document.getElementById(id+i).value,hits=q[1].filter(k=>hit(x,[k])).length;
+let marks=id==="q5"||id==="q7"?(hits?2:0):Math.min(2,hits);
+score+=marks;out+=review(id.toUpperCase()+"."+ (i+1),marks===2,x,q[2],marks);
+}));
+document.getElementById("results").classList.remove("hidden");
+document.getElementById("score").innerHTML=`${score} / 80<br><small>${(score/80*100).toFixed(2)}%</small>`;
+document.getElementById("summary").innerHTML=`<div class="review ${score>=64?"correct":"wrong"}"><b>${score>=64?"🌟 Excellent — 80%+!":"🌷 Keep practising!"}</b><br>The complete correction and answer key are below.</div>`;
+document.getElementById("correction").innerHTML=out;
+document.getElementById("results").scrollIntoView({behavior:"smooth"});
+}
+function talk(){
+let inp=document.getElementById("chatInput"),x=inp.value.trim();if(!x)return;
+chat.innerHTML+=`<div class="msg me">${esc(x)}</div>`;
+let y=norm(x),r="🌷 I can explain the seven chapters, give hints, or help you revise.";
+if(y.includes("renaissance"))r="🌸 Renaissance means rebirth. It encouraged humanism, classical learning, art, science and new ideas.";
+else if(y.includes("industrial"))r="🏭 The Industrial Revolution began in Britain. Key ideas: factories, machines, steam power, coal, iron and mass production.";
+else if(y.includes("french")||y.includes("revolution"))r="🦋 The French Revolution began in 1789. Key ideas: Liberty, Equality and Fraternity.";
+else if(y.includes("civil war")||y.includes("lincoln"))r="🇺🇸 The American Civil War was fought between the North and South. Slavery was a major issue and Abraham Lincoln was President.";
+else if(y.includes("legislature")||y.includes("parliament"))r="🏛️ Parliament consists of the President, Lok Sabha and Rajya Sabha.";
+else if(y.includes("executive")||y.includes("prime minister"))r="👑 The President is the constitutional head. The Prime Minister heads the Council of Ministers and exercises real executive authority.";
+else if(y.includes("judiciary")||y.includes("supreme court"))r="⚖️ The Supreme Court is India's highest court. It interprets the Constitution and can exercise judicial review.";
+chat.innerHTML+=`<div class="msg bot">${r}</div>`;chat.scrollTop=chat.scrollHeight;inp.value="";
+}
+render();
+</script>
+</body>
+</html>
